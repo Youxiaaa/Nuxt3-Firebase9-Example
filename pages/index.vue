@@ -99,7 +99,8 @@ const filterTodos = computed(() => {
 
 //刪除todo
 const removeItem = (id) => {
-  remove(dbRef, id)
+  const targetItem = sRef(db, `/todos/${id}`)
+  remove(targetItem)
   getTodos()
 }
 
