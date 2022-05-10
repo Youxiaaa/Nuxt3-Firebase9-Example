@@ -37,7 +37,6 @@
 </template>
 
 <script async setup>
-import '@/assets/main.css'
 // firebase 的 ref 會和 Vue3 的 ref 重名到，使用 sRef 替代
 import { getDatabase, onValue, ref as sRef, push, update, remove} from "firebase/database";
 
@@ -100,7 +99,6 @@ const filterTodos = computed(() => {
 
 //刪除todo
 const removeItem = (id) => {
-  // dbRef.child(id).remove()
   remove(dbRef, id)
   getTodos()
 }
