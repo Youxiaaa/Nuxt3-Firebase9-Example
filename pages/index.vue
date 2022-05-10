@@ -1,33 +1,33 @@
 <template>
   <section>
     <div
-      class="w-full h-screen flex flex-col justify-center items-center bg-[url('https://images.unsplash.com/photo-1595871213029-7476de0d71dd?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2138&q=80')] bg-cover">
-      <h1 class="text-center text-3xl text-white mix-blend-difference font-bold mb-5">TodoList</h1>
+      class="w-full h-screen flex flex-col justify-center items-center bg-[#FEC6C2]">
+      <h1 class="text-center text-3xl text-white font-bold mb-5">TodoList</h1>
       <div
-        class="w-80 max-w-[90vw] p-3 flex flex-col gap-3 bg-[#f1f1f1] rounded-xl shadow-md overflow-hidden">
+        class="w-80 max-w-[90vw] p-4 flex flex-col gap-3 bg-[#C4E7E1] rounded-2xl shadow-md overflow-hidden">
         <div class="relative overflow-hidden rounded-xl shadow-md mb-3">
           <input @keyup.enter="addTodo()" v-model="newTodo" type="text"
             class="py-2 px-3 rounded-xl focus:outline-none w-full">
           <button @click="addTodo()"
-            class="absolute w-12 h-full right-0 top-0 bg-[#f1f1f1] active:shadow-[inset_2px_2px_4px_1px_rgba(0,0,0,0.25)]">+</button>
+            class="absolute w-12 h-full right-0 top-0 bg-[#FEC6C2] text-white active:shadow-[inset_2px_2px_4px_1px_rgba(0,0,0,0.25)]">+</button>
         </div>
         <ul class="flex items-center gap-3 mb-3">
           <li @click="selected = item.label" v-for="item in tabMenu.data" :key="item.id"
-            class="w-full text-center text-[#666] select-none p-2 cursor-pointer rounded-xl shadow-[5px_3px_8px_0px_rgba(0,0,0,0.15),-3px_-4px_4px_0px_rgba(255,255,255,0.75)]"
-            :class="{'shadow-[inset_5px_5px_5px_0px_rgba(0,0,0,0.15),inset_-3px_-4px_4px_0px_rgba(255,255,255,0.75)]': selected === item.label}">
+            class="w-full text-center text-[#fff] font-bold select-none p-2 cursor-pointer rounded-xl shadow-[5px_3px_8px_0px_rgba(0,0,0,0.15),-3px_-4px_4px_0px_rgba(255,255,255,0.4)]"
+            :class="{'shadow-[inset_5px_5px_5px_0px_rgba(0,0,0,0.15),inset_-3px_-4px_4px_0px_rgba(255,255,255,0.4)]': selected === item.label}">
             <p>{{ item.label }}</p>
           </li>
         </ul>
         <ul class="w-full flex flex-col gap-5 text-[#666]">
-          <li v-for="item in filterTodos" :key="item.id" class="p-3 rounded-xl shadow-[5px_3px_8px_0px_rgba(0,0,0,0.15),-3px_-4px_4px_0px_rgba(255,255,255,0.75)] flex justify-between items-center px-3">
+          <li v-for="item in filterTodos" :key="item.id" class="bg-[#C4E7E1] p-3 rounded-xl shadow-[5px_3px_8px_0px_rgba(0,0,0,0.15),-3px_-4px_5px_0px_rgba(255,255,255,0.4)] flex justify-between items-center px-3">
             <div class="flex items-center gap-3">
-              <label :for="item.id" class="w-5 h-5 border border-[#aeaeae] rounded-full flex items-center justify-center cursor-pointer">
-                <div class="w-3.5 h-3.5 rounded-full bg-[#aeaeae] scale-0 duration-300" :class="{'scale-100': item.isCompleted}"></div>
+              <label :for="item.id" class="w-5 h-5 border border-[#fff] font-bold rounded-full flex items-center justify-center cursor-pointer">
+                <div class="w-3.5 h-3.5 rounded-full bg-[#fff] font-bold scale-0 duration-300" :class="{'scale-100': item.isCompleted}"></div>
               </label>
               <input @change="completedItem(item)" v-model="item.isCompleted" :id="item.id" type="checkbox" class="hidden">
-              <p class="relative after:content-[''] after:duration-300 after:absolute after:h-[1px] after:bg-[#666] after:left-0 after:top-1/2 after:-translate-y-1/2" :class="{'after:w-full': item.isCompleted, 'after:w-0': !item.isCompleted}">{{ item.content }}</p>
+              <p class="text-[#fff] relative after:content-[''] after:duration-300 after:absolute after:h-[2px] after:bg-[#fff] font-bold after:left-0 after:top-1/2 after:-translate-y-1/2" :class="{'after:w-full': item.isCompleted, 'after:w-0': !item.isCompleted}">{{ item.content }}</p>
             </div>
-            <a @click="removeItem(item.id)" class="fa-solid fa-trash-can cursor-pointer">X</a>
+            <a @click="removeItem(item.id)" class="fa-solid fa-trash-can cursor-pointer text-[#fff] font-bold">X</a>
           </li>
         </ul>
 
