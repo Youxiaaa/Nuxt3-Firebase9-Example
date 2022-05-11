@@ -37,6 +37,9 @@
 </template>
 
 <script lang="ts" setup>
+// 引入型別宣告對象
+import todoItem from '@/interface/todoItem'
+
 // firebase 的 ref 會和 Vue3 的 ref 重名到，使用 sRef 替代
 import { getDatabase, onValue, ref as sRef, push, update, remove} from "firebase/database";
 
@@ -55,7 +58,7 @@ const getTodos = () => {
       const data = Object.values(snapshot.val())
       const id = Object.keys(snapshot.val())
       data.forEach((item, idx) => {
-        item.id = id[idx]
+        item['id'] = id[idx] as String
       })
       todos.data = data
     } else {
@@ -66,12 +69,12 @@ const getTodos = () => {
 
 // 新增todo
 const addTodo = () => {
-  const todo = newTodo.value.trim() as String
+  const todo = newTodo.value.trim()
   if (!todo) return
   const data = {
     content: todo,
     isCompleted: false
-  }
+  } as todoItem
   push(dbRef, data)
   newTodo.value = ''
   getTodos()
@@ -80,9 +83,9 @@ const addTodo = () => {
 // tab按鈕、過濾顯示todos
 const tabMenu = reactive({
   data: [
-    { id:<Number> 1, label:<String> '全部' },
-    { id:<Number> 2, label:<String> '未完成' },
-    { id:<Number> 3, label:<String> '已完成' },
+    { id: 1, label: '全部' },
+    { id: 2, label: '未完成' },
+    { id: 3, label: '已完成' },
   ]
 })
 let selected = ref<String>('全部')
@@ -109,10 +112,11 @@ const removeItem = (id) => {
 //完成todo
 const completedItem = (item) => {
   const data = {
-    content:<String> item.content,
-    isCompleted:<Boolean> item.isCompleted
-  }
-  // 官方文件說的，不知道
+    content: item.content,
+    isCompleted: item.isCompleted
+  } as todoItem
+
+  // 官方文件寫的更新方法
   // https://firebase.google.com/docs/database/web/read-and-write
   const updates = {}
   updates[item.id] = data
@@ -120,7 +124,7 @@ const completedItem = (item) => {
   getTodos()
 }
 
-//執行取得todo
+//初始執行取得todo
 getTodos()
 
 </script>
