@@ -36,15 +36,17 @@
   </section>
 </template>
 
-<script async setup>
+<script lang="ts" setup>
 // firebase 的 ref 會和 Vue3 的 ref 重名到，使用 sRef 替代
 import { getDatabase, onValue, ref as sRef, push, update, remove} from "firebase/database";
 
+// 宣告 Database
 const db = getDatabase()
 const dbRef = sRef(db, '/todos')
 
-let todos = reactive({ data: [] })
-const newTodo = ref('')
+// 宣告需要放值的變數
+let todos = reactive<any>({ data: [] })
+const newTodo = ref<String>('')
 
 //取得todos
 const getTodos = () => {
@@ -64,7 +66,7 @@ const getTodos = () => {
 
 // 新增todo
 const addTodo = () => {
-  const todo = newTodo.value.trim()
+  const todo = newTodo.value.trim() as String
   if (!todo) return
   const data = {
     content: todo,
@@ -78,12 +80,12 @@ const addTodo = () => {
 // tab按鈕、過濾顯示todos
 const tabMenu = reactive({
   data: [
-    { id: 1, label: '全部' },
-    { id: 2, label: '未完成' },
-    { id: 3, label: '已完成' },
+    { id:<Number> 1, label:<String> '全部' },
+    { id:<Number> 2, label:<String> '未完成' },
+    { id:<Number> 3, label:<String> '已完成' },
   ]
 })
-let selected = ref('全部')
+let selected = ref<String>('全部')
 const filterTodos = computed(() => {
   switch (selected.value) {
     case '全部':
@@ -107,8 +109,8 @@ const removeItem = (id) => {
 //完成todo
 const completedItem = (item) => {
   const data = {
-    content: item.content,
-    isCompleted: item.isCompleted
+    content:<String> item.content,
+    isCompleted:<Boolean> item.isCompleted
   }
   // 官方文件說的，不知道
   // https://firebase.google.com/docs/database/web/read-and-write
