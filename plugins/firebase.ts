@@ -1,5 +1,4 @@
 import { initializeApp } from "firebase/app"
-import { getDatabase } from "firebase/database"
 
 export default defineNuxtPlugin(nuxtApp => {
 const firebaseConfig = {
@@ -12,6 +11,5 @@ const firebaseConfig = {
   appId: "1:951486330273:web:8c9e4bb68bd7eb039c07e0"
 };
 
-  const app = initializeApp(firebaseConfig)
-  const database = getDatabase(app);
+  initializeApp(firebaseConfig)
 })
